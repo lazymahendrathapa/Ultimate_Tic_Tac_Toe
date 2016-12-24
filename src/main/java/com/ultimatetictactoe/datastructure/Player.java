@@ -1,4 +1,4 @@
-package com.ultimatetictactoe;
+package com.ultimatetictactoe.datastructure;
 
 public enum Player {
 
