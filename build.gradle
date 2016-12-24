@@ -19,7 +19,7 @@ apply plugin: 'application'
 apply plugin: 'spring-boot'
 
 
-mainClassName = 'com.ultimatetictactoe.demo.ApplicationDemo'
+mainClassName = 'com.ultimatetictactoe.TicTacToe'
 version = '1.0.0'
 
 repositories {
@@ -36,15 +36,19 @@ dependencies {
 	compile group: 'org.testng', name: 'testng', version: '6.9.13.6'
 
 	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+	
 	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
 
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
+	
 	testCompile("org.springframework.boot:spring-boot-starter-test")
 	
 	compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 
 	compile group: 'org.powermock', name: 'powermock-mockito-release-full', version: '1.6.4'
-	
+
+    compile 'org.bitbucket.shemnon.javafxplugin:gradle-javafx-plugin:8.1.1'
+    	
     /**
     * List the compile dependencies. 
     */
