@@ -1,0 +1,61 @@
+// Include the Spring boot gradle plugin.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+}
+
+plugins {
+  // SonarQube to check code quality.
+  id "org.sonarqube" version "2.2"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'spring-boot'
+
+
+mainClassName = 'com.ultimatetictactoe.demo.ApplicationDemo'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+
+
+	compile group: 'org.testng', name: 'testng', version: '6.9.13.6'
+
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+
+	compile("org.springframework.boot:spring-boot-starter-data-rest")
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+	
+	compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+	compile group: 'org.powermock', name: 'powermock-mockito-release-full', version: '1.6.4'
+	
+    /**
+    * List the compile dependencies. 
+    */
+	task listJars << {
+		configurations.compile.each { File file -> println file.name }
+	}
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'UltimateTicTacToe',
+                   'Implementation-Version': version
+    }
+}
