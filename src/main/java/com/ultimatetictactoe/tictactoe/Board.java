@@ -43,4 +43,26 @@ public class Board extends GridPane {
 		for(Square square : squares)
 			square.reset();
 	}
+
+	public void evaluate(){
+		
+	}
+	
+	public void disable(){
+	
+		for(Square square : squares)
+			square.button().setDisable(true);
+	}
+	
+	public boolean isCaputred(){
+		return capture;
+	}
+	
+	public void enable(){
+		if(!gameOver){
+			for(int i=0; i<squares.length; ++i){
+				squares[i].button().setDisable(false);
+			}
+		}
+	}
 }

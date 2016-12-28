@@ -1,5 +1,6 @@
 package com.ultimatetictactoe;
 
+import com.ultimatetictactoe.datastructure.Position;
 import com.ultimatetictactoe.tictactoe.Board;
 
 import javafx.scene.layout.GridPane;
@@ -31,5 +32,30 @@ public class UltimateTicTacToeBoard extends GridPane {
 		for(Board board : boards){
 			board.reset();
 		}
+	}
+	
+	public void disable(){
+	
+		for(Board board : boards)
+				board.disable();
+	}
+	
+	public void enable(Position position){
+	
+		for(int i=0; i<Position.values().length; ++i){
+			if(position == Position.getPositionFromValue(i)){
+			
+				if(boards[i].isCaputred())
+					this.enableAll();
+				else
+					boards[i].enable();
+			}
+		}
+	}
+	
+	private void enableAll(){
+
+		for(Board board : boards)
+			board.enable();
 	}
 }

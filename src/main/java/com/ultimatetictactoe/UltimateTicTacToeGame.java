@@ -36,7 +36,7 @@ public class UltimateTicTacToeGame extends BorderPane {
 	private IntegerProperty tieScore = new SimpleIntegerProperty(0);
 
 	private Player currentPlayer = Player.X;
-	
+
 	private UltimateTicTacToeBoard ultimateTicTacToeBoard;
 
 	public UltimateTicTacToeGame(Stage stage) {
@@ -98,8 +98,25 @@ public class UltimateTicTacToeGame extends BorderPane {
 		this.currentlyPlaying.setValue(xPlayer.getValue());
 		this.ultimateTicTacToeBoard.reset();
 	}
-	
-	public Player getCurrentPlayer(){
+
+	public Player getCurrentPlayer() {
 		return currentPlayer;
+	}
+
+	public void endTurn() {
+
+		if (this.currentPlayer == Player.X) {
+			this.currentPlayer = Player.O;
+			this.currentlyPlaying.setValue(oPlayer.getValue());
+		} else {
+
+			this.currentPlayer = Player.X;
+			this.currentlyPlaying.setValue(xPlayer.getValue());
+		}
+
+	}
+	
+	public UltimateTicTacToeBoard getUltimateTicTacToeBoard(){
+		return this.ultimateTicTacToeBoard;
 	}
 }

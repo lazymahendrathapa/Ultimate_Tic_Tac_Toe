@@ -17,7 +17,12 @@ public class Square {
 		button.setOnAction(e ->{
 			
 			if(button.getText().isEmpty()){
-				
+				button.setText(ultimateTicTacToeGame.getCurrentPlayer().toString());
+				button.setStyle(ultimateTicTacToeGame.getCurrentPlayer().getStyle());
+				board.evaluate();
+				ultimateTicTacToeGame.endTurn();
+				ultimateTicTacToeGame.getUltimateTicTacToeBoard().disable();
+				ultimateTicTacToeGame.getUltimateTicTacToeBoard().enable(position);
 			}
 			
 		});
