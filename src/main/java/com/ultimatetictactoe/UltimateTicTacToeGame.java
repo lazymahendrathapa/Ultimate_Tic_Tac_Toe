@@ -3,49 +3,42 @@ package com.ultimatetictactoe;
 import com.ultimatetictactoe.datastructure.Player;
 
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.beans.property.StringProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.binding.Bindings;
 
 import javafx.stage.Stage;
 
 public class UltimateTicTacToeGame extends BorderPane {
 
-	private StringProperty currentlyPlaying = new SimpleStringProperty("X Player");
-	private StringProperty xPlayer = new SimpleStringProperty("X Player");
-	private StringProperty oPlayer = new SimpleStringProperty("O Player");
-
-	private Text playingText;
-	private IntegerProperty xScore = new SimpleIntegerProperty(0);
-	private IntegerProperty oScore = new SimpleIntegerProperty(0);
-	private IntegerProperty tieScore = new SimpleIntegerProperty(0);
-
+	private Text currentPlayerText;
 	private Player currentPlayer = Player.X;
+	private StringProperty currentlyPlaying = new SimpleStringProperty(Player.X.toString());
 
 	private UltimateTicTacToeBoard ultimateTicTacToeBoard;
 
-	public UltimateTicTacToeGame(Stage stage) {
+	public UltimateTicTacToeGame() {
 
 		ultimateTicTacToeBoard = new UltimateTicTacToeBoard(this);
 		HBox layout = new HBox();
 		MenuBar menuBar = this.generateMenuBar();
 		HBox.setHgrow(menuBar, Priority.ALWAYS);
-		layout.getChildren().addAll(menuBar, playingText);
+		layout.getChildren().addAll(menuBar, currentPlayerText);
 		setTop(layout);
 		setCenter(ultimateTicTacToeBoard);
 	}
@@ -62,22 +55,8 @@ public class UltimateTicTacToeGame extends BorderPane {
 		Menu gameMenu = new Menu("Game");
 		gameMenu.getItems().addAll(newGameMenuItem, exitMenuItem);
 
-		Text xText = new Text();
-		xText.textProperty().bind(Bindings.concat(xPlayer).concat(" wins: ").concat(xScore.asString()));
-
-		Text oText = new Text();
-		oText.textProperty().bind(Bindings.concat(oPlayer).concat(" wins: ").concat(oScore.asString()));
-
-		Text tieText = new Text();
-		tieText.textProperty().bind(Bindings.concat("Ties: ").concat(tieScore.asString()));
-
-		playingText = new Text();
-		playingText.textProperty().bind(Bindings.concat(currentlyPlaying).concat("'s turn"));
-
-		VBox scoreLayout = new VBox(5);
-		scoreLayout.getChildren().addAll(xText, oText, tieText);
-		scoreLayout.setPadding(new Insets(5));
-		scoreLayout.setAlignment(Pos.CENTER);
+		currentPlayerText = new Text();
+		currentPlayerText.textProperty().bind(Bindings.concat(currentlyPlaying).concat(" Player's turn"));
 
 		this.activateMnemonics(gameMenu, newGameMenuItem, exitMenuItem);
 
@@ -93,9 +72,8 @@ public class UltimateTicTacToeGame extends BorderPane {
 
 	private void newGame() {
 
-		this.ultimateTicTacToeBoard.boardCount = 0;
 		this.currentPlayer = Player.X;
-		this.currentlyPlaying.setValue(xPlayer.getValue());
+		this.currentlyPlaying.setValue(Player.X.toString());
 		this.ultimateTicTacToeBoard.reset();
 	}
 
@@ -107,16 +85,59 @@ public class UltimateTicTacToeGame extends BorderPane {
 
 		if (this.currentPlayer == Player.X) {
 			this.currentPlayer = Player.O;
-			this.currentlyPlaying.setValue(oPlayer.getValue());
+			this.currentlyPlaying.setValue(Player.O.toString());
 		} else {
 
 			this.currentPlayer = Player.X;
-			this.currentlyPlaying.setValue(xPlayer.getValue());
+			this.currentlyPlaying.setValue(Player.X.toString());
 		}
-
 	}
-	
-	public UltimateTicTacToeBoard getUltimateTicTacToeBoard(){
+
+	public UltimateTicTacToeBoard getUltimateTicTacToeBoard() {
 		return this.ultimateTicTacToeBoard;
+	}
+
+	public void endPrompt(String message) {
+
+		Stage stage = new Stage();
+		Label label = new Label(message);
+		label.setStyle("-fx-font-weight: bold;");
+
+		final int buttonWidth = 80;
+
+		Button reset = new Button("New Game");
+		reset.setMinWidth(buttonWidth);
+		reset.setOnAction(e -> {
+			stage.close();
+			newGame();
+		});
+
+		reset.setDefaultButton(true);
+
+		Button quit = new Button("Quit");
+		quit.setMinWidth(buttonWidth);
+		quit.setOnAction(e -> Platform.exit());
+
+		HBox gameLayout = new HBox(5);
+		gameLayout.getChildren().addAll(reset, quit);
+		gameLayout.setAlignment(Pos.CENTER);
+
+		VBox layout = new VBox(5);
+		layout.getChildren().addAll(label, gameLayout);
+		layout.setAlignment(Pos.CENTER);
+
+		stage.setScene(new Scene(layout, 175 + new Text(message).getLayoutBounds().getWidth(), 75));
+		stage.sizeToScene();
+		stage.setTitle("Game Over");
+		ultimateTicTacToeBoard.disable();
+		stage.show();
+	}
+
+	public String checkWinner(String winner) {
+
+		if (winner.equals("X"))
+			return Player.X.toString();
+		else
+			return Player.O.toString();
 	}
 }

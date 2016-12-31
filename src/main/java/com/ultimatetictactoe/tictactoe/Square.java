@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 
 public class Square {
 
-	private final int SQUARE_LENGTH = 70;
+	private static final int SQUARE_LENGTH = 70;
 	private Button button = new Button();
 	
 	public Square(UltimateTicTacToeGame ultimateTicTacToeGame, Board board, Position position){
@@ -19,7 +19,7 @@ public class Square {
 			if(button.getText().isEmpty()){
 				button.setText(ultimateTicTacToeGame.getCurrentPlayer().toString());
 				button.setStyle(ultimateTicTacToeGame.getCurrentPlayer().getStyle());
-				board.evaluate();
+				board.evaluateState();
 				ultimateTicTacToeGame.endTurn();
 				ultimateTicTacToeGame.getUltimateTicTacToeBoard().disable();
 				ultimateTicTacToeGame.getUltimateTicTacToeBoard().enable(position);
@@ -30,6 +30,10 @@ public class Square {
 	
 	public Button button(){
 		return button;
+	}
+
+	public boolean equivalentTo(Square square){
+		return !button.getText().isEmpty() && button.getText().equals(square.button.getText());
 	}
 	
 	public void reset(){

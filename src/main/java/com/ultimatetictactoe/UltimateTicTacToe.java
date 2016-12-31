@@ -15,7 +15,7 @@ public class UltimateTicTacToe extends Application {
 	public void start(Stage stage) {
 
 		stage.setTitle("Ultimate Tic Tac Toe");
-		Scene scene = new Scene(new UltimateTicTacToeGame(stage));
+		Scene scene = new Scene(new UltimateTicTacToeGame());
 		scene.getStylesheets().add("tictactoe.css");
 		stage.setScene(scene);
 		stage.getIcons().add(new Image("icon.png"));
