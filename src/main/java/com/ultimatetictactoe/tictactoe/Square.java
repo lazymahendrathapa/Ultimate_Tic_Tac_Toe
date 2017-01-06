@@ -9,35 +9,43 @@ public class Square {
 
 	private static final int SQUARE_LENGTH = 70;
 	private Button button = new Button();
-	
-	public Square(UltimateTicTacToeGame ultimateTicTacToeGame, Board board, Position position){
-	
+
+	public Square(UltimateTicTacToeGame ultimateTicTacToeGame, Board board, Position position) {
+
 		button.setMinSize(SQUARE_LENGTH, SQUARE_LENGTH);
-		
-		button.setOnAction(e ->{
-			
-			if(button.getText().isEmpty()){
+
+		button.setOnAction(e -> {
+
+			if (button.getText().isEmpty()) {
+
 				button.setText(ultimateTicTacToeGame.getCurrentPlayer().toString());
-				button.setStyle(ultimateTicTacToeGame.getCurrentPlayer().getStyle());
-				board.evaluateState();
+
+				if (!board.isCaputred()) {
+					button.setStyle(ultimateTicTacToeGame.getCurrentPlayer().getStyle());
+					board.evaluateState();
+					
+				} else{
+					button.setStyle(board.getWinner().getStyle());
+				}
+
 				ultimateTicTacToeGame.endTurn();
 				ultimateTicTacToeGame.getUltimateTicTacToeBoard().disable();
 				ultimateTicTacToeGame.getUltimateTicTacToeBoard().enable(position);
 			}
-			
+
 		});
 	}
-	
-	public Button button(){
+
+	public Button button() {
 		return button;
 	}
 
-	public boolean equivalentTo(Square square){
+	public boolean equivalentTo(Square square) {
 		return !button.getText().isEmpty() && button.getText().equals(square.button.getText());
 	}
-	
-	public void reset(){
-		
+
+	public void reset() {
+
 		button.setText("");
 		button.setStyle("");
 		button.setDisable(false);

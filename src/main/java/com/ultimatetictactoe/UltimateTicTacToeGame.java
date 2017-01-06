@@ -91,6 +91,7 @@ public class UltimateTicTacToeGame extends BorderPane {
 			this.currentPlayer = Player.X;
 			this.currentlyPlaying.setValue(Player.X.toString());
 		}
+		
 	}
 
 	public UltimateTicTacToeBoard getUltimateTicTacToeBoard() {

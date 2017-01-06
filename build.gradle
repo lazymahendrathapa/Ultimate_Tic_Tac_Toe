@@ -19,7 +19,7 @@ apply plugin: 'application'
 apply plugin: 'spring-boot'
 
 
-mainClassName = 'com.ultimatetictactoe.TicTacToe'
+mainClassName = 'com.ultimatetictactoe.UltimateTicTacToe'
 version = '1.0.0'
 
 repositories {

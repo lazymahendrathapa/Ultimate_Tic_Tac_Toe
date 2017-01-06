@@ -81,7 +81,7 @@ public class UltimateTicTacToeBoard extends GridPane {
 		if(boardCounter>2 && boards[one].eqnivalentTo(boards[two]) && boards[one].eqnivalentTo(boards[three])){
 		
 			gameEnd();
-			ultimateTicTacToeGame.endPrompt(ultimateTicTacToeGame.checkWinner(boards[one].getWinner().toString()) + "Player wins!");
+			ultimateTicTacToeGame.endPrompt(ultimateTicTacToeGame.checkWinner(boards[one].getWinner().toString()) + " Player wins!");
 			return true;
 		}
 			
